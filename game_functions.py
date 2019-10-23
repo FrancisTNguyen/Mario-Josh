@@ -30,7 +30,7 @@ def check_keydown(event, mario, goomba, koopa):
         mario.facing_left = True
         mario.facing_right = False
         goomba.moving_left = True
-        goomba.moving_left = True
+        koopa.moving_left = True
     elif event.key == pygame.K_UP or event.key == K_w or event.key == pygame.K_SPACE:
         mario.is_jumping = True
         mario.jump()
@@ -60,7 +60,7 @@ def check_keyup(event, mario, goomba, koopa):
         pass
 
 
-def check_mario_enemy_collision(mario, enemies):
+def check_mario_enemy_collision(mario, enemies, koopas):
     for enemy in enemies:
         if pygame.sprite.collide_rect(mario, enemy):
             if enemy.rect.top - 5 <= mario.rect.bottom <= enemy.rect.top + 5:
@@ -68,16 +68,29 @@ def check_mario_enemy_collision(mario, enemies):
             elif enemy.rect.left - 5 <= mario.rect.right <= enemy.rect.left + 5:
                 print("HELP")
 
+    for koopa in koopas:
+        if pygame.sprite.collide_rect(mario, koopa):
+            if koopa.rect.top - 5 <= mario.rect.bottom <= koopa.rect.top + 5:
+                koopa.shell_mode = True
+                # koopas.remove(koopa)
+            elif mario.rect.right >= koopa.rect.left:
+                print("HELP")
+            elif mario.rect.right >= koopa.rect.left and koopa.shell_mode:
+                koopa.shell_mode = False
+                koopa.shell_mode_moving = True
+                print("move shell")
 
-def update_mario(mario, enemies):
+
+def update_mario(mario, enemies, koopas):
     mario.update()
+    check_mario_enemy_collision(mario=mario, enemies=enemies, koopas=koopas)
 
-    check_mario_enemy_collision(mario=mario, enemies=enemies)
 
-
-def update_screen(screen, mario, enemies):
+def update_screen(screen, mario, enemies, koopas):
     screen.fill(constants.bg_color)
     mario.blitme()
     for enemy in enemies:
         enemy.blitme()
+    for koopa in koopas:
+        koopa.blitme()
     pygame.display.flip()

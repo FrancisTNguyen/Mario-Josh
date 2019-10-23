@@ -3,7 +3,7 @@ import pygame
 import constants
 import game_functions as gf
 from enemies import Goomba
-from enemies import Koopa
+from Koopa import RegularKoopa
 from mario import LittleMario, SuperMario
 
 
@@ -15,14 +15,16 @@ def main():
     mario = LittleMario(screen=screen)
     super_mario = SuperMario(screen=screen)
     goomba = Goomba(screen=screen)
-    koopa = Koopa(screen=screen)
-    enemies = [Koopa]
+    koopa = RegularKoopa(screen=screen)
+    enemies = []
+    koopas = [koopa]
 
     while True:
         gf.check_events(mario=mario, goomba=goomba, koopa=koopa)
-        gf.update_mario(mario=mario, enemies=enemies)
-        koopa.updatekoopa()
-        gf.update_screen(screen=screen, mario=mario, enemies=enemies)
+        gf.update_mario(mario=mario, enemies=enemies, koopas=koopas)
+        goomba.update()
+        koopa.update()
+        gf.update_screen(screen=screen, mario=mario, enemies=enemies, koopas=koopas)
 
 
 if __name__ == "__main__":
