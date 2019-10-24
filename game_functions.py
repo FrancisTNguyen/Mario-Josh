@@ -11,26 +11,22 @@ def check_events(mario, goomba, koopa):
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown(event=event, mario=mario, goomba=goomba, koopa=koopa)
+            check_keydown(event=event, mario=mario)
         elif event.type == pygame.KEYUP:
-            check_keyup(event=event, mario=mario, goomba=goomba, koopa=koopa)
+            check_keyup(event=event, mario=mario)
 
 
-def check_keydown(event, mario, goomba, koopa):
+def check_keydown(event, mario):
     """ Respond to keypresses  """
     # Movement flags set to true
     if event.key == pygame.K_RIGHT or event.key == K_d:
         mario.moving_right = True
         mario.facing_right = True
         mario.facing_left = False
-        goomba.moving_right = True
-        koopa.moving_right = True
     elif event.key == pygame.K_LEFT or event.key == K_a:
         mario.moving_left = True
         mario.facing_left = True
         mario.facing_right = False
-        goomba.moving_left = True
-        koopa.moving_left = True
     elif event.key == pygame.K_UP or event.key == K_w or event.key == pygame.K_SPACE:
         mario.is_jumping = True
         mario.jump()
@@ -41,18 +37,14 @@ def check_keydown(event, mario, goomba, koopa):
         sys.exit()
 
 
-def check_keyup(event, mario, goomba, koopa):
+def check_keyup(event, mario):
     """ Respond to key releases """
     if event.key == pygame.K_RIGHT or event.key == K_d:
         mario.moving_right = False
         mario.facing_right = True
-        goomba.moving_right = False
-        koopa.moving_right = False
     elif event.key == pygame.K_LEFT or event.key == K_a:
         mario.moving_left = False
         mario.facing_left = True
-        goomba.moving_left = False
-        koopa.moving_left = False
     elif event.key == pygame.K_UP or event.key == K_w or event.key == pygame.K_SPACE:
         mario.is_jumping = True
     elif event.key == pygame.K_DOWN or event.key == K_s:

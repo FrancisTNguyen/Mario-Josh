@@ -53,6 +53,8 @@ class Koopa(Sprite):
         # TODO: handle blitme when the koopa is in shell mode
         if self.shell_mode:
             self.screen.blit(self.imageShell, self.rect)
+        if self.shell_mode_moving:
+            self.screen.blit(self.imageShell, self.rect)
 
     def update(self):
         self.x += (1 * self.direction)
