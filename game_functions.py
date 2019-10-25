@@ -5,7 +5,7 @@ from pygame.locals import *
 import constants
 
 
-def check_events(mario, goomba, koopa):
+def check_events(mario):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -52,6 +52,16 @@ def check_keyup(event, mario):
         pass
 
 
+def check_koopa_enemy_collision(enemies, koopas):
+    for koopa in koopas:
+        for enemy in enemies:
+            if koopa.shell_mode_moving:
+                if pygame.sprite.collide_rect(enemy, koopa):
+                    # if enemy.rect.left - 5 <= koopa.rect.right <= enemy.rect.left + 5:
+                    enemies.remove(enemy)
+                    print("enemy removed")
+
+
 def check_mario_enemy_collision(mario, enemies, koopas):
     for enemy in enemies:
         if pygame.sprite.collide_rect(mario, enemy):
@@ -77,6 +87,7 @@ def check_mario_enemy_collision(mario, enemies, koopas):
 def update_mario(mario, enemies, koopas):
     mario.update()
     check_mario_enemy_collision(mario=mario, enemies=enemies, koopas=koopas)
+    check_koopa_enemy_collision(enemies=enemies, koopas=koopas)
 
 
 def update_screen(screen, mario, enemies, koopas):

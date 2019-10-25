@@ -37,7 +37,7 @@ class Enemy(Sprite):
         self.screen.blit(self.image, self.rect)
 
     def update(self):
-        self.x += (2 * self.direction)
+        self.x += (0.5 * self.direction)
         self.rect.x = self.x
         self.image = self.walk_list[self.animation.frame_index()]
 

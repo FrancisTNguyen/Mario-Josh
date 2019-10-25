@@ -16,11 +16,11 @@ def main():
     super_mario = SuperMario(screen=screen)
     goomba = Goomba(screen=screen)
     koopa = RegularKoopa(screen=screen)
-    enemies = []
+    enemies = [goomba]
     koopas = [koopa]
 
     while True:
-        gf.check_events(mario=mario, goomba=goomba, koopa=koopa)
+        gf.check_events(mario=mario)
         gf.update_mario(mario=mario, enemies=enemies, koopas=koopas)
         goomba.update()
         koopa.update()
