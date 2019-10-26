@@ -83,8 +83,10 @@ class Koopa(Sprite):
         if self.shell_mode_moving:
             self.moving_right = False
             self.moving_left = False
-            self.direction = 1
-            self.direction *= -1
+            if self.direction == 1:
+                self.direction *= -1
+            if self.direction == -1:
+                self.direction *= 1
             self.imageShell = self.shell_list[self.animation.frame_index()]
             print("moving")
 

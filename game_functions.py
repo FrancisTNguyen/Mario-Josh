@@ -73,15 +73,23 @@ def check_mario_enemy_collision(mario, enemies, koopas):
 
     for koopa in koopas:
         if pygame.sprite.collide_rect(mario, koopa):
-            if koopa.rect.top - 5 <= mario.rect.bottom <= koopa.rect.top + 5:
+            if mario.rect.bottom > koopa.rect.top - 10:
+                mario.jump()
                 koopa.shell_mode = True
                 print('SHELL MODE TRUE')
                 # koopas.remove(koopa)
 
             if mario.rect.right >= koopa.rect.left and not koopa.shell_mode:
                 print("mario hit")
-            elif mario.rect.right >= koopa.rect.left and koopa.shell_mode:
+            if mario.rect.right >= koopa.rect.left and koopa.shell_mode:
+                print("mario hit")
+            if mario.rect.bottom > koopa.rect.top - 5 and mario.center > koopa.x and koopa.shell_mode:
                 koopa.shell_mode = False
+                koopa.direction = 1
+                koopa.shell_mode_moving = True
+            if mario.rect.bottom > koopa.rect.top - 5 and mario.center < koopa.x and koopa.shell_mode:
+                koopa.shell_mode = False
+                koopa.direction = -1
                 koopa.shell_mode_moving = True
 
 

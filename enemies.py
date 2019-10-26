@@ -31,6 +31,7 @@ class Enemy(Sprite):
         self.y = float(self.rect.centery)
 
         # movement flags
+        self.death_jump = 0
         self.moving_left = False
         self.moving_right = False
         self.direction = 1
@@ -59,8 +60,15 @@ class Enemy(Sprite):
         if self.died:
             self.direction = 0
             self.image = self.walk_list[self.animation.frame_index()]
-            self.rect.y -= 1
-            # TODO: handle flipping
+            if self.rect.bottom >= self.screen_rect.bottom:
+                self.death_jump = -7
+                # self.rect.y += self.death_jump
+                if self.death_jump != 0:
+                    self.death_jump += 8
+                    print("goes here")
+                    self.rect.y += self.death_jump
+
+            # self.rect.y += self.death_jump
 
 
 class Goomba(Enemy):
