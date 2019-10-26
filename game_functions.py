@@ -58,7 +58,8 @@ def check_koopa_enemy_collision(enemies, koopas):
             if koopa.shell_mode_moving:
                 if pygame.sprite.collide_rect(enemy, koopa):
                     # if enemy.rect.left - 5 <= koopa.rect.right <= enemy.rect.left + 5:
-                    enemies.remove(enemy)
+                    enemy.died = True
+                    # enemies.remove(enemy)
                     print("enemy removed")
 
 
