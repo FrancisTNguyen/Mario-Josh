@@ -41,10 +41,10 @@ class Enemy(Sprite):
         self.died = False
 
     def blitme(self):
-        if not self.died:
-            self.screen.blit(self.image, self.rect)
         if self.died:
             self.screen.blit(pygame.transform.flip(self.death_image, False, True), self.rect)
+        if not self.died:
+            self.screen.blit(self.image, self.rect)
 
     def update(self):
         self.x += (0.5 * self.direction)
@@ -63,7 +63,6 @@ class Enemy(Sprite):
             self.direction = 0
             self.death_image = self.death_list[self.animation.frame_index()]
             print("flipped static")
-            pass
 
 
 class Goomba(Enemy):
