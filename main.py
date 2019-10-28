@@ -5,6 +5,7 @@ import game_functions as gf
 from enemies import Goomba
 from Koopa import RegularKoopa
 from mario import LittleMario, SuperMario
+from PiranhaPlant import UnderGroundPiranha
 
 
 def main():
@@ -16,15 +17,18 @@ def main():
     super_mario = SuperMario(screen=screen)
     goomba = Goomba(screen=screen)
     koopa = RegularKoopa(screen=screen)
-    enemies = [goomba]
+    piranha = UnderGroundPiranha(screen=screen)
+    enemies = []
+    piranhas = []
     koopas = [koopa]
 
     while True:
         gf.check_events(mario=mario)
-        gf.update_mario(mario=mario, enemies=enemies, koopas=koopas)
+        gf.update_mario(mario=mario, enemies=enemies, koopas=koopas, piranhas=piranhas)
         goomba.update()
         koopa.update()
-        gf.update_screen(screen=screen, mario=mario, enemies=enemies, koopas=koopas)
+        piranha.update()
+        gf.update_screen(screen=screen, mario=mario, enemies=enemies, koopas=koopas, piranhas=piranhas)
 
 
 if __name__ == "__main__":

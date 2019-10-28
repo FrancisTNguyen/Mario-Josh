@@ -63,7 +63,7 @@ def check_koopa_enemy_collision(enemies, koopas):
                     print("enemy removed")
 
 
-def check_mario_enemy_collision(mario, enemies, koopas):
+def check_mario_enemy_collision(mario, enemies, koopas, piranhas):
     for enemy in enemies:
         if pygame.sprite.collide_rect(mario, enemy):
             if enemy.rect.top - 5 <= mario.rect.bottom <= enemy.rect.top + 5:
@@ -71,11 +71,19 @@ def check_mario_enemy_collision(mario, enemies, koopas):
             elif enemy.rect.left - 5 <= mario.rect.right <= enemy.rect.left + 5:
                 print("HELP")
 
+    for piranha in piranhas:
+        if pygame.sprite.collide_rect(mario, piranha):
+            print("Piranha hit Mario")
+
     for koopa in koopas:
         if pygame.sprite.collide_rect(mario, koopa):
             if mario.rect.bottom > koopa.rect.top - 10:
                 mario.jump()
-                koopa.shell_mode = True
+                if koopa.shell_mode_moving:
+                    koopa.shell_mode = True
+                    koopa.shell_mode_moving = False
+                elif not koopa.shell_mode_moving:
+                    koopa.shell_mode = True
                 print('SHELL MODE TRUE')
                 # koopas.remove(koopa)
 
@@ -84,24 +92,28 @@ def check_mario_enemy_collision(mario, enemies, koopas):
             if mario.rect.right >= koopa.rect.left and koopa.shell_mode:
                 print("mario hit")
             if mario.rect.bottom > koopa.rect.top - 5 and mario.center > koopa.x and koopa.shell_mode:
+                mario.jump()
                 koopa.shell_mode = False
                 koopa.direction = 1
                 koopa.shell_mode_moving = True
             if mario.rect.bottom > koopa.rect.top - 5 and mario.center < koopa.x and koopa.shell_mode:
+                mario.jump()
                 koopa.shell_mode = False
                 koopa.direction = -1
                 koopa.shell_mode_moving = True
 
 
-def update_mario(mario, enemies, koopas):
+def update_mario(mario, enemies, koopas, piranhas):
     mario.update()
-    check_mario_enemy_collision(mario=mario, enemies=enemies, koopas=koopas)
+    check_mario_enemy_collision(mario=mario, enemies=enemies, koopas=koopas, piranhas=piranhas)
     check_koopa_enemy_collision(enemies=enemies, koopas=koopas)
 
 
-def update_screen(screen, mario, enemies, koopas):
+def update_screen(screen, mario, enemies, koopas, piranhas):
     screen.fill(constants.bg_color)
     mario.blitme()
+    for piranha in piranhas:
+        piranha.blitme()
     for enemy in enemies:
         enemy.blitme()
     for koopa in koopas:

@@ -84,9 +84,11 @@ class Koopa(Sprite):
             self.moving_right = False
             self.moving_left = False
             if self.direction == 1:
-                self.direction *= -1
+                if self.rect.right >= self.screen_rect.centerx + 150:
+                    self.direction *= -1
             if self.direction == -1:
-                self.direction *= 1
+                if self.rect.left <= self.screen_rect.centerx - 150:
+                    self.direction *= -1
             self.imageShell = self.shell_list[self.animation.frame_index()]
             print("moving")
 
